@@ -1,7 +1,6 @@
 // Copyright 2021 by FORTYSS
 
 #include <server.hpp>
-
 #include "suggestion.hpp"
 
 int main(int argc, char* argv[]) {

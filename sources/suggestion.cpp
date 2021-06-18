@@ -6,7 +6,7 @@ bool comp(const config& first, const config& second) {
   return first.cost > second.cost;
 }
 
-nlohmann::json suggestion::get_json_suggestion(std :: string input) {
+  nlohmann::json suggestion::get_json_suggestion(std :: string input) {
   nlohmann::json j = nlohmann::json::parse(input);
   std::vector<nlohmann::json> out_suggestions;
   int count = 0;
