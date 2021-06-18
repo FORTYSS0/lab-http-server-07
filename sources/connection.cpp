@@ -31,8 +31,8 @@ void connection::process_request() {
       break;
 
     default:
-      // We return responses indicating an error if
-      // we do not recognize the request method.
+      // Возвращаю ответы, указывающие на ошибку, если
+      // прога не распознаёт метод запроса.
       response_.result(boost::beast::http::status::bad_request);
       response_.set(boost::beast::http::field::content_type,
                     "text/plain");
