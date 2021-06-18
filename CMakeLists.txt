@@ -18,7 +18,7 @@ include("cmake/HunterGate.cmake")
 HunterGate(
   URL "https://github.com/cpp-pm/hunter/archive/v0.23.278.tar.gz"
   SHA1 "35fa55bc1dfcf9f4d7264f8bb26cd1759ce1ae07"
-  LOCAL
+#  LOCAL
 )
 
 # TODO: rename project and delete this comment
@@ -30,9 +30,21 @@ string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
+hunter_add_package(Beast)
+find_package(Beast CONFIG REQUIRED)
+
+hunter_add_package(asio)
+find_package(asio CONFIG REQUIRED version 1.18.1)
+
+hunter_add_package(Boost COMPONENTS thread system filesystem)
+find_package(Boost COMPONENTS thread system filesystem)
+
+hunter_add_package(nlohmann_json)
+find_package(nlohmann_json CONFIG REQUIRED)
+
 add_library(${PROJECT_NAME} STATIC
-  # enum your files and delete this comment
-  ${CMAKE_CURRENT_SOURCE_DIR}/sources/source.cpp
+        sources/suggestion.cpp
+        sources/connection.cpp
 )
 
 add_executable(demo
@@ -41,10 +53,17 @@ add_executable(demo
 
 target_include_directories(${PROJECT_NAME} PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+        "$<BUILD_INTERFACE:${Boost_INCLUDE_DIR}>"
   "$<INSTALL_INTERFACE:include>"
 )
 
 target_link_libraries(demo ${PROJECT_NAME})
+target_link_libraries(${PROJECT_NAME} nlohmann_json::nlohmann_json)
+target_link_libraries(${PROJECT_NAME} ${Boost_THREAD_LIBRARY})
+target_link_libraries(${PROJECT_NAME} ${Boost_SYSTEM_LIBRARY})
+target_link_libraries(${PROJECT_NAME} ${Boost_FILESYSTEM_LIBRARY})
+target_link_libraries(${PROJECT_NAME} Beast::Beast)
+target_link_libraries(${PROJECT_NAME}  asio::asio_static)
 
 if(BUILD_TESTS)
   add_executable(tests
