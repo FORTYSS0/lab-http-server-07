@@ -76,3 +76,7 @@
 - [Boost.Beast](https://github.com/boostorg/beast)
 - [Vinnie Falco: Boost.Beast](https://vinniefalco.github.io/beast/)
 - [POST](https://ru.wikipedia.org/wiki/POST_(HTTP))
+
+
+
+#P.S. Пример ввод для тупых, как я: ./demo0 127.0.0.1 8080
